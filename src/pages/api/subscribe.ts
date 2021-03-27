@@ -16,7 +16,8 @@ type User =  {
 export default async ( req: NextApiRequest, res: NextApiResponse) => {
     if(req.method === 'POST') {
         const session = await getSession({ req });
-
+        
+        console.log('USUARIO', session)
         const user = await fauna.query<User>(
             q.Get(
                 q.Match(
@@ -25,6 +26,7 @@ export default async ( req: NextApiRequest, res: NextApiResponse) => {
                 )
             )
         )
+
 
         let customerId = user.data.stripe_customer_id;
 
@@ -54,7 +56,7 @@ export default async ( req: NextApiRequest, res: NextApiResponse) => {
             payment_method_types: ['card'],
             billing_address_collection: 'required',
             line_items: [
-                {price: 'price_1IYyLuIkqzuOebXd6qCdBN6B', quantity: 1}
+                {price: 'price_1IYHpICbjeVHhA6Q9xr9bFSB', quantity: 1}
             ],
             mode: 'subscription',
             allow_promotion_codes: true,
